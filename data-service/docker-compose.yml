@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    command: redis-server /data/redis.conf
+    volumes:
+      - ./data/redis:/data/redis
+      - ./data/redis/redis.conf:/data/redis.conf
+    restart: unless-stopped
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/azure-sql-edge
+    ports:
+      - 1433:1433
+    volumes:
+      - ./data/mssql:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=MyPass@word
+      - MSSQL_PID=Developer
+    restart: unless-stopped
