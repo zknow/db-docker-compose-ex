@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  sqlite3:
+    container_name: sqlite3
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data:/var/lib/data
+    ports:
+      - "9000:9000"
+    restart: unless-stopped

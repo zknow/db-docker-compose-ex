@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin #postgres
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /var/lib/data
+    volumes:
+      - ./data:/var/lib/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
