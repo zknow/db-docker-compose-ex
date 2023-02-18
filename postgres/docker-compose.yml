@@ -6,11 +6,33 @@ services:
     image: postgres:15.2-alpine
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USER: admin #postgres
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: admin
       PGDATA: /var/lib/data
     volumes:
-      - ./data:/var/lib/data
+      - ./postgres-data:/var/lib/postgres
     ports:
       - "5432:5432"
     restart: unless-stopped
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: xxx@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "5050:80"
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  pgadmin-data:
